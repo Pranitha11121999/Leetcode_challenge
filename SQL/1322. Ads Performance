@@ -1,0 +1,21 @@
+WITH ctr AS (
+    SELECT ad_id,
+           SUM(CASE WHEN action = 'Clicked' THEN 1 ELSE 0 END) AS ctrClicked,
+           SUM(CASE WHEN action = 'Viewed' THEN 1 ELSE 0 END) AS ctrViewed
+    FROM Ads
+    GROUP BY ad_id
+)
+SELECT ad_id,
+       IFNULL((ctrClicked / (ctrClicked + ctrViewed) * 100), 0) AS ctr
+FROM ctr
+ORDER BY ctr DESC, ad_id ASC;
+
+
+Learning:
+  1. Multiple CTEs: You cannot have multiple WITH clauses like that. Instead, you should combine them into a single WITH clause by using multiple CTE definitions separated by commas.
+
+  2. Invalid Condition in WHERE Clause: In the WHERE clause, action is 'Clicked' and action is 'Viewed' are incorrect. Instead, you should use action = 'Clicked' and action = 'Viewed'.
+
+  3. Missing Joins: The cte CTEs are not being joined with each other, which means they will not be able to combine data from the different actions.
+
+  4. Query Logic: You should use SUM(CASE WHEN action = 'Clicked' THEN 1 ELSE 0 END) to properly sum the clicks and views.
