@@ -1,0 +1,16 @@
+1303. Find the Team Size
+
+SELECT e.employee_id, t.team_size
+FROM Employee e
+JOIN (
+    SELECT team_id, COUNT(employee_id) AS team_size
+    FROM Employee
+    GROUP BY team_id
+) t ON e.team_id = t.team_id
+ORDER BY e.employee_id;
+
+
+Observation:
+    1. Use your logic (COUNT with GROUP BY employee_id) when you need to count how many rows or occurrences exist for each employee directly. For example: "How many times does each employee appear in the table?"
+
+    2. Use the corrected logic (GROUP BY team_id and JOIN) when you need to count something at a group level (like team size) and associate that back to the individual employees. For example: "How many people are in each employee's team?"
