@@ -1,0 +1,36 @@
+1084. Sales Analysis III
+
+
+We first join two tables sales and product on equal product ids. Then we group the table by the product_id column.
+
+SELECT DISTINCT p.product_id, p.product_name
+FROM Sales s
+LEFT JOIN Product p ON p.product_id = s.product_id
+GROUP BY p.product_id
+Note that we need to guarantee there are no duplicates, therefore we use the SELECT DISTINCT statement here.
+
+Next, we use the HAVING clause to select groups (product ids) of interest that satisfy the following conditions:
+
+the earliest date is larger or equal to '2019-01-01', MIN(sale_date) >= '2019-01-01'
+the latest date is smaller or equal to '2019-03-31', MAX(sale_date) <= '2019-03-31'
+
+-- # Write your MySQL query statement below
+-- select Product.product_id, product_name from Product 
+-- left join Sales on
+-- Product.product_id = Sales.product_id
+-- where sale_date between '2019-01-01' and '2019-03-31' 
+-- and Product.product_id not in ( 
+--     SELECT Product.product_id 
+--     FROM Sales
+-- WHERE Sales.sale_date  between '2019-04-01' and '2019-12-31'
+-- -- );
+SELECT DISTINCT p.product_id, p.product_name
+FROM Sales s
+LEFT JOIN Product p ON p.product_id = s.product_id
+GROUP BY p.product_id
+HAVING MIN(sale_date) >= '2019-01-01' AND MAX(sale_date) <= '2019-03-31';
+
+Mistakes:
+NOT IN: Can be slower, especially with large datasets, because it often requires a complete scan of the subquery results. The database has to compare every value from the outer query with every value in the subquery, which can be expensive for performance.
+
+NOT EXISTS: Typically performs better, especially with indexed columns. The database engine can stop searching as soon as it finds a match in the subquery, leading to faster execution.
