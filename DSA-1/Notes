@@ -1,0 +1,19 @@
+DSA 
+
+1. Factors 
+        1. example n = 100
+            step 1 - underroote 100 = 10 
+            step 2 - 1 to 10 the factors are 1,2,4,5,10
+            step 3 - divide by the 100/factor to get the higher factors 
+
+
+[a,b] - number of elements are b-a+1
+[a,b) - number of elements are b-a
+(a,b] - number of elements are b-a
+(a,b) - number of elemets are b-a-1 ( b>a)
+[a,b] if we are moving from a to b as hops ( fixed value of jumps) - 1+ [b-a/c(jumps)]
+
+
+Iteration 
+1. break - do not count the later loops 
+2. continue - count that loop
